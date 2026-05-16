@@ -1,4 +1,5 @@
 function newRound() {
+  line.style.visibility = "hidden";
   map = [
     ["", "", ""],
     ["", "", ""],
@@ -90,45 +91,80 @@ function isOver() {
   }
   // sprawdzamy wszystkie wiersze
   if (map[0][0] == map[0][1] && map[0][1] == map[0][2] && map[0][2] != "") {
+    line.style.visibility = "visible";
+    line.style.width = "275px";
+    line.style.top = "16%";
+    line.style.transform = "translate(-50%, -50%)";
     return true;
   } else if (
     map[1][0] == map[1][1] &&
     map[1][1] == map[1][2] &&
     map[1][2] != ""
   ) {
+    line.style.visibility = "visible";
+    line.style.width = "275px";
+    line.style.top = "50%";
+    line.style.transform = "translate(-50%, -50%)";
     return true;
   } else if (
     map[2][0] == map[2][1] &&
     map[2][1] == map[2][2] &&
     map[2][2] != ""
   ) {
+    line.style.visibility = "visible";
+    line.style.width = "275px";
+    line.style.top = "84%";
+    line.style.transform = "translate(-50%, -50%)";
     return true;
   }
   // sprawdzamy wszystkie kolumny
   if (map[0][0] == map[1][0] && map[1][0] == map[2][0] && map[2][0] != "") {
+    line.style.visibility = "visible";
+    line.style.width = "275px";
+    line.style.top = "50%";
+    line.style.left = "16%";
+    line.style.transform = "translate(-50%, -50%) rotate(90deg)";
     return true;
   } else if (
     map[0][1] == map[1][1] &&
     map[1][1] == map[2][1] &&
     map[2][1] != ""
   ) {
+    line.style.visibility = "visible";
+    line.style.width = "275px";
+    line.style.top = "50%";
+    line.style.left = "4%";
+    line.style.transform = "translateY(-50%) rotate(90deg)";
     return true;
   } else if (
     map[0][2] == map[1][2] &&
     map[1][2] == map[2][2] &&
     map[2][2] != ""
   ) {
+    line.style.visibility = "visible";
+    line.style.width = "275px";
+    line.style.top = "50%";
+    line.style.left = "84%";
+    line.style.transform = "translate(-50%, -50%) rotate(90deg)";
     return true;
   }
 
   // sprawdzamy skosy
   if (map[0][0] == map[1][1] && map[1][1] == map[2][2] && map[2][2] != "") {
+    line.style.visibility = "visible";
+    line.style.width = "340px";
+    line.style.top = "50%";
+    line.style.transform = "translate(-50%, -50%) rotate(45deg)";
     return true;
   } else if (
     map[2][0] == map[1][1] &&
     map[1][1] == map[0][2] &&
     map[0][2] != ""
   ) {
+    line.style.visibility = "visible";
+    line.style.width = "340px";
+    line.style.top = "50%";
+    line.style.transform = "translate(-50%, -50%) rotate(-45deg)";
     return true;
   }
   // sprawdzamy czy zostało wolne miejsce czy jest remis
@@ -163,7 +199,7 @@ let map = [
   ["", "", ""],
   ["", "", ""],
 ];
-
+const line = document.querySelector("#line");
 const newGameBtn = document.querySelector("#newGameBtn");
 // Stats
 let crossesWins = 0;

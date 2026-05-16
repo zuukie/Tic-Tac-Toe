@@ -102,6 +102,7 @@ body::after {
 }
 
 .content {
+  height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,7 +112,18 @@ h3#whosTurn i {
   margin-right: 5px;
 }
 
+hr {
+  position: absolute;
+  left: 50%;
+  border: solid 3px rgb(241, 241, 241);
+  border-radius: 50px;
+  box-shadow: 0 0 8px white;
+  z-index: 150;
+}
+
 .game {
+  position: absolute;
+  top: 22%;
   margin: 10px 0;
   height: 300px;
   width: 300px;
@@ -150,6 +162,8 @@ h3#whosTurn i {
 }
 
 button {
+  position: relative;
+  top: 48%;
   cursor: pointer;
   margin: 20px 0;
   background: rgba(255, 255, 255, 0.1);
@@ -173,6 +187,8 @@ button:disabled {
 }
 
 .stats {
+  position: relative;
+  top: 50%;
   width: 300px;
   padding: 10px 0;
   background: rgba(255, 255, 255, 0.05);
