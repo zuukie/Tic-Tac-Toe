@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-Tac-Toe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/9539ec0894.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/style/style.css" />
+  </head>
+  <body>
+    <div class="title">
+      <h1>Tic-Tac-Toe</h1>
+    </div>
+    <div class="content">
+      <h3 id="whosTurn"></h3>
+      <div class="game">
+        <div id="LT00" class="box">
+          <i></i>
+        </div>
+        <div id="CT01" class="box">
+          <i></i>
+        </div>
+        <div id="RT02" class="box">
+          <i></i>
+        </div>
+        <div id="LC10" class="box">
+          <i></i>
+        </div>
+        <div id="CC11" class="box">
+          <i></i>
+        </div>
+        <div id="RC12" class="box">
+          <i></i>
+        </div>
+        <div id="LB20" class="box">
+          <i></i>
+        </div>
+        <div id="CB21" class="box">
+          <i></i>
+        </div>
+        <div id="RB22" class="box">
+          <i></i>
+        </div>
+      </div>
+      <button id="newGameBtn" disabled>New Game</button>
+      <div class="stats">
+        <h4>Game Stats</h4>
+        <div class="stat">
+          <div class="crosses">
+            <p id="crossesWinsNum">0</p>
+            <i class="fa-solid fa-x"></i>
+          </div>
+          <div class="draws">
+            <p id="drawsNum">0</p>
+            <p class="drawsDesc">Draws</p>
+          </div>
+          <div class="circles">
+            <p id="circlesWinsNum">0</p>
+            <i class="fa-regular fa-circle"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="./script.js"></script>
+</html>

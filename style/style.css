@@ -1,0 +1,210 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+*:not(dialog) {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #1b1b1b 0%, #0e0e0e 100%);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: rgb(241, 241, 241);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.2;
+  z-index: 0;
+}
+
+body::before {
+  background: #0099ff;
+  top: 10%;
+  left: 10%;
+}
+
+body::after {
+  background: #ae00ff;
+  bottom: 10%;
+  right: 10%;
+}
+
+.title {
+  padding-top: 100px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h3#whosTurn i {
+  margin-right: 5px;
+}
+
+.game {
+  margin: 10px 0;
+  height: 300px;
+  width: 300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.box {
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease;
+  text-align: center;
+  border-radius: 20px;
+  transition: transform 0.2s;
+  z-index: 50;
+}
+
+.taken {
+  cursor: default;
+}
+
+.box i {
+  font-size: 30px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.box:hover {
+  transform: scale(1.03);
+}
+
+button {
+  cursor: pointer;
+  margin: 20px 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: none;
+  border-radius: 15px;
+  padding: 10px 20px;
+  color: rgb(241, 241, 241);
+  z-index: 50;
+  transition: transform 0.2s;
+}
+
+button:enabled:hover {
+  transform: scale(1.05);
+}
+
+button:disabled {
+  cursor: default;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(241, 241, 241, 0.267);
+}
+
+.stats {
+  width: 300px;
+  padding: 10px 0;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+}
+
+.stats h4 {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.stat {
+  display: flex;
+  justify-content: center;
+  margin: 10px 5px 15px 5px;
+}
+
+.stat div {
+  width: 33%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.draws p.drawsDesc {
+  font-size: 15px;
+}
+
+.stat .draws {
+  border-left: 2px solid rgba(255, 255, 255, 0.01);
+  border-right: 2px solid rgba(255, 255, 255, 0.01);
+}/*# sourceMappingURL=style.css.map */
