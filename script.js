@@ -13,16 +13,26 @@ function newRound() {
     boxes[i].setAttribute("class", "box");
     boxes[i].children[0].setAttribute("class", "");
   }
+  // Wyłączamy ustawienia
+  settingsMenu.setAttribute("class", "settings disabled");
 }
 
 function whoStarts() {
-  whosTurn = Math.floor(Math.random() * 2);
-  if (whosTurn == 0) {
-    whosTurn = "O";
-    whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
-  } else {
+  if (firstMove == "R") {
+    whosTurn = Math.floor(Math.random() * 2);
+    if (whosTurn == 0) {
+      whosTurn = "O";
+      whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+    } else {
+      whosTurn = "X";
+      whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+    }
+  } else if (firstMove == "X") {
     whosTurn = "X";
     whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+  } else {
+    whosTurn = "O";
+    whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
   }
 }
 
@@ -51,6 +61,7 @@ function placeMove(square) {
     turns++;
   }
   if (isOver()) {
+    settingsMenu.setAttribute("class", "settings");
     isActive = false;
     newGameBtn.disabled = false;
     winUpdate();
@@ -94,6 +105,7 @@ function isOver() {
     line.style.visibility = "visible";
     line.style.width = "275px";
     line.style.top = "16%";
+    line.style.left = "";
     line.style.transform = "translate(-50%, -50%)";
     return true;
   } else if (
@@ -104,6 +116,8 @@ function isOver() {
     line.style.visibility = "visible";
     line.style.width = "275px";
     line.style.top = "50%";
+    line.style.left = "";
+
     line.style.transform = "translate(-50%, -50%)";
     return true;
   } else if (
@@ -114,6 +128,8 @@ function isOver() {
     line.style.visibility = "visible";
     line.style.width = "275px";
     line.style.top = "84%";
+    line.style.left = "";
+
     line.style.transform = "translate(-50%, -50%)";
     return true;
   }
@@ -154,7 +170,9 @@ function isOver() {
     line.style.visibility = "visible";
     line.style.width = "340px";
     line.style.top = "50%";
-    line.style.transform = "translate(-50%, -50%) rotate(45deg)";
+    line.style.left = "";
+
+    line.style.transform = "translateX(-50%) rotate(45deg)";
     return true;
   } else if (
     map[2][0] == map[1][1] &&
@@ -164,11 +182,14 @@ function isOver() {
     line.style.visibility = "visible";
     line.style.width = "340px";
     line.style.top = "50%";
-    line.style.transform = "translate(-50%, -50%) rotate(-45deg)";
+    line.style.left = "";
+
+    line.style.transform = "translateX(-50%) rotate(-45deg)";
     return true;
   }
   // sprawdzamy czy zostało wolne miejsce czy jest remis
   if (turns == 9) {
+    settingsMenu.setAttribute("class", "settings");
     isActive = false;
     newGameBtn.disabled = false;
     whosTurnText.innerHTML = "Draw!";
@@ -193,22 +214,6 @@ const rc = document.querySelector("#RC12");
 const rb = document.querySelector("#RB22");
 const lb = document.querySelector("#LB20");
 const cb = document.querySelector("#CB21");
-const boxes = [lt, ct, rt, lc, cc, rc, rb, lb, cb];
-let map = [
-  ["", "", ""],
-  ["", "", ""],
-  ["", "", ""],
-];
-const line = document.querySelector("#line");
-const newGameBtn = document.querySelector("#newGameBtn");
-// Stats
-let crossesWins = 0;
-let circlesWins = 0;
-let draws = 0;
-const crossWinsStat = document.querySelector("#crossesWinsNum");
-const circlesWinsStat = document.querySelector("#circlesWinsNum");
-const drawsStats = document.querySelector("#drawsNum");
-
 lt.addEventListener("click", () => {
   if (!isTaken(lt)) {
     placeMove(lt);
@@ -254,8 +259,83 @@ rb.addEventListener("click", () => {
     placeMove(rb);
   }
 });
+
+const boxes = [lt, ct, rt, lc, cc, rc, rb, lb, cb];
+let map = [
+  ["", "", ""],
+  ["", "", ""],
+  ["", "", ""],
+];
+const line = document.querySelector("#line");
+
+const newGameBtn = document.querySelector("#newGameBtn");
 newGameBtn.addEventListener("click", () => {
   newRound();
 });
 
-newRound();
+// Stats
+let crossesWins = 0;
+let circlesWins = 0;
+let draws = 0;
+const crossWinsStat = document.querySelector("#crossesWinsNum");
+const circlesWinsStat = document.querySelector("#circlesWinsNum");
+const drawsStats = document.querySelector("#drawsNum");
+// Settings
+const settingsMenu = document.querySelector("#settingsMenu");
+const typePlayersBtn = document.querySelector("#players");
+const typeComputerBtn = document.querySelector("#computer");
+const settings2Players = document.querySelector("#settings2Players");
+const settingsComputer = document.querySelector("#settingsComputer");
+
+// Wybieramy tryb gry dwoch graczy
+typePlayersBtn.addEventListener("click", () => {
+  if (typePlayersBtn.getAttribute("class") != "enabled") {
+    typePlayersBtn.setAttribute("class", "enabled");
+    typeComputerBtn.setAttribute("class", "");
+
+    settings2Players.style.display = "block";
+    settingsComputer.style.display = "none";
+  }
+});
+// Wybieramy tryb gry z komputerem
+typeComputerBtn.addEventListener("click", () => {
+  if (typeComputerBtn.getAttribute("class") != "enabled") {
+    typeComputerBtn.setAttribute("class", "enabled");
+    typePlayersBtn.setAttribute("class", "");
+
+    settings2Players.style.display = "none";
+    settingsComputer.style.display = "block";
+  }
+});
+
+// Wybór kto zaczyna
+let firstMove = "R"; // "R" to default + "O" i "X"
+const firstMoveCrossOpt = document.querySelector("#firstCross");
+const firstMoveCircleOpt = document.querySelector("#firstCircle");
+const firstMoveRandomOpt = document.querySelector("#firstRandom");
+
+// Opcje kto zaczyna
+firstMoveCrossOpt.addEventListener("click", () => {
+  if (firstMoveCrossOpt.getAttribute("class") != "enabled") {
+    firstMoveCrossOpt.setAttribute("class", "enabled");
+    firstMoveCircleOpt.setAttribute("class", "");
+    firstMoveRandomOpt.setAttribute("class", "");
+    firstMove = "X";
+  }
+});
+firstMoveCircleOpt.addEventListener("click", () => {
+  if (firstMoveCircleOpt.getAttribute("class") != "enabled") {
+    firstMoveCircleOpt.setAttribute("class", "enabled");
+    firstMoveCrossOpt.setAttribute("class", "");
+    firstMoveRandomOpt.setAttribute("class", "");
+    firstMove = "O";
+  }
+});
+firstMoveRandomOpt.addEventListener("click", () => {
+  if (firstMoveRandomOpt.getAttribute("class") != "enabled") {
+    firstMoveRandomOpt.setAttribute("class", "enabled");
+    firstMoveCrossOpt.setAttribute("class", "");
+    firstMoveCircleOpt.setAttribute("class", "");
+    firstMove = "R";
+  }
+});

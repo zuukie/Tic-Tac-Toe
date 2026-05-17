@@ -17,10 +17,8 @@
     <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
-    <div class="title">
+    <main>
       <h1>Tic-Tac-Toe</h1>
-    </div>
-    <div class="content">
       <h3 id="whosTurn"></h3>
       <div class="game">
         <hr id="line" style="visibility: hidden" />
@@ -52,7 +50,7 @@
           <i></i>
         </div>
       </div>
-      <button id="newGameBtn" disabled>New Game</button>
+      <button id="newGameBtn">New Game</button>
       <div class="stats">
         <h4>Game Stats</h4>
         <div class="stat">
@@ -70,7 +68,92 @@
           </div>
         </div>
       </div>
-    </div>
+      <div class="settings" id="settingsMenu">
+        <h4>Settings</h4>
+        <div class="setting">
+          <h5>Game Type</h5>
+          <div class="options mini">
+            <div class="enabled" id="players">
+              <i class="fa-solid fa-user-group"></i>
+              <p>2 Players</p>
+            </div>
+            <div id="computer">
+              <i class="fa-solid fa-computer"></i>
+              <p>Computer</p>
+            </div>
+          </div>
+          <div id="settings2Players">
+            <div class="setting">
+              <h5>Who starts?</h5>
+              <div class="options">
+                <div id="firstCross" class="">
+                  <i class="fa-solid fa-x"></i>
+                  <p>Cross</p>
+                </div>
+                <div id="firstCircle" class="">
+                  <i class="fa-regular fa-circle"></i>
+                  <p>Circle</p>
+                </div>
+                <div id="firstRandom" class="enabled">
+                  <i class="fa-solid fa-random"></i>
+                  <p>Random</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="settingsComputer" style="display: none">
+            <div class="setting">
+              <h5>Player Sign</h5>
+              <div class="options mini">
+                <div class="crosses enabled">
+                  <i class="fa-solid fa-x"></i>
+                  <p>Cross</p>
+                </div>
+                <div class="circles">
+                  <i class="fa-regular fa-circle"></i>
+                  <p>Circle</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting">
+              <h5>Who starts?</h5>
+              <div class="options">
+                <div id="firstPlayer" class="">
+                  <i class="fa-solid fa-user"></i>
+                  <p>Player</p>
+                </div>
+                <div id="firstPC" class="">
+                  <i class="fa-solid fa-computer"></i>
+                  <p>Computer</p>
+                </div>
+                <div id="firstRandom" class="enabled">
+                  <i class="fa-solid fa-random"></i>
+                  <p>Random</p>
+                </div>
+              </div>
+            </div>
+            <div class="setting">
+              <h5>Difficulty</h5>
+              <div class="options">
+                <div class="easy enabled">
+                  <i class="fa-solid fa-lemon"></i>
+                  <p>Easy</p>
+                </div>
+                <div class="medium">
+                  <i class="fa-solid fa-star"></i>
+                  <p>Medium</p>
+                </div>
+                <div class="hard">
+                  <i class="fa-solid fa-skull"></i>
+                  <p>Hard</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </body>
   <script src="./script.js"></script>
 </html>
