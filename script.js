@@ -16,34 +16,103 @@ function newRound() {
   }
   // Wyłączamy ustawienia
   settingsMenu.setAttribute("class", "settings disabled");
+
+  if (againstComputer) {
+    if (whosTurn != playerSign) {
+      if (difficulty == "E") {
+        moveEasy();
+      } else if (difficulty == "M") {
+        moveMedium();
+      } else if (difficulty == "H") {
+        moveHard();
+      }
+    }
+  }
 }
 
 function whoStarts() {
-  if (firstMove == "R") {
-    whosTurn = Math.floor(Math.random() * 2);
-    if (whosTurn == 0) {
-      whosTurn = "O";
-      whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
-    } else {
+  if (!againstComputer) {
+    if (firstMove == "R") {
+      whosTurn = Math.floor(Math.random() * 2);
+      if (whosTurn == 0) {
+        whosTurn = "O";
+        whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+      } else {
+        whosTurn = "X";
+        whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+      }
+    } else if (firstMove == "X") {
       whosTurn = "X";
       whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+    } else {
+      whosTurn = "O";
+      whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
     }
-  } else if (firstMove == "X") {
-    whosTurn = "X";
-    whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
   } else {
-    whosTurn = "O";
-    whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+    if (whoStartsvsPC == "R") {
+      whosTurn = Math.floor(Math.random() * 2);
+      if (whosTurn == 0) {
+        whosTurn = "O";
+        whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+      } else {
+        whosTurn = "X";
+        whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+      }
+    } else if (whoStartsvsPC == "P") {
+      if (playerSign == "X") {
+        whosTurn = "X";
+        whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+      } else {
+        whosTurn = "O";
+        whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+      }
+    } else if (whoStartsvsPC == "C") {
+      if (playerSign == "O") {
+        whosTurn = "X";
+        whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+      } else {
+        whosTurn = "O";
+        whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+      }
+    }
   }
 }
 
 function turnChange() {
-  if (whosTurn == "O") {
-    whosTurn = "X";
-    whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+  if (!againstComputer) {
+    if (whosTurn == "O") {
+      whosTurn = "X";
+      whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+    } else {
+      whosTurn = "O";
+      whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+    }
   } else {
-    whosTurn = "O";
-    whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+    if (whosTurn != playerSign) {
+      if (playerSign == "X") {
+        whosTurn = "X";
+        whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+      } else {
+        whosTurn = "O";
+        whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+      }
+    } else {
+      if (playerSign == "O") {
+        whosTurn = "X";
+        whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+      } else {
+        whosTurn = "O";
+        whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+      }
+
+      if (difficulty == "E") {
+        setTimeout(moveEasy, 500);
+      } else if (difficulty == "M") {
+        moveMedium();
+      } else if (difficulty == "H") {
+        moveHard();
+      }
+    }
   }
 }
 
@@ -219,47 +288,47 @@ const rb = document.querySelector("#RB22");
 const lb = document.querySelector("#LB20");
 const cb = document.querySelector("#CB21");
 lt.addEventListener("click", () => {
-  if (!isTaken(lt)) {
+  if (!isTaken(lt) && isPlayerTurn()) {
     placeMove(lt);
   }
 });
 ct.addEventListener("click", () => {
-  if (!isTaken(ct)) {
+  if (!isTaken(ct) && isPlayerTurn()) {
     placeMove(ct);
   }
 });
 rt.addEventListener("click", () => {
-  if (!isTaken(rt)) {
+  if (!isTaken(rt) && isPlayerTurn()) {
     placeMove(rt);
   }
 });
 lc.addEventListener("click", () => {
-  if (!isTaken(lc)) {
+  if (!isTaken(lc) && isPlayerTurn()) {
     placeMove(lc);
   }
 });
 cc.addEventListener("click", () => {
-  if (!isTaken(cc)) {
+  if (!isTaken(cc) && isPlayerTurn()) {
     placeMove(cc);
   }
 });
 rc.addEventListener("click", () => {
-  if (!isTaken(rc)) {
+  if (!isTaken(rc) && isPlayerTurn()) {
     placeMove(rc);
   }
 });
 lb.addEventListener("click", () => {
-  if (!isTaken(lb)) {
+  if (!isTaken(lb) && isPlayerTurn()) {
     placeMove(lb);
   }
 });
 cb.addEventListener("click", () => {
-  if (!isTaken(cb)) {
+  if (!isTaken(cb) && isPlayerTurn()) {
     placeMove(cb);
   }
 });
 rb.addEventListener("click", () => {
-  if (!isTaken(rb)) {
+  if (!isTaken(rb) && isPlayerTurn()) {
     placeMove(rb);
   }
 });
@@ -352,9 +421,117 @@ firstMoveRandomOpt.addEventListener("click", () => {
   }
 });
 
-// Dla gry vs pc
+// Ustawienia do gry vs pc
 let playerSign = "X";
+const playerSignOptCross = document.querySelector("#playerCross");
+const playerSignOptCircle = document.querySelector("#playerCircle");
+
+playerSignOptCross.addEventListener("click", () => {
+  if (playerSignOptCross.getAttribute("class") != "enabled") {
+    playerSignOptCross.setAttribute("class", "enabled");
+    playerSignOptCircle.setAttribute("class", "");
+    playerSign = "X";
+  }
+});
+playerSignOptCircle.addEventListener("click", () => {
+  if (playerSignOptCircle.getAttribute("class") != "enabled") {
+    playerSignOptCircle.setAttribute("class", "enabled");
+    playerSignOptCross.setAttribute("class", "");
+    playerSign = "O";
+  }
+});
+
 let whoStartsvsPC = "R"; // "P", "C", "R"
+const firstPlayerOpt = document.querySelector("#firstPlayer");
+const firstComputerOpt = document.querySelector("#firstComputer");
+const firstRandomOpt = document.querySelector("#firstRandomC");
+
+firstPlayerOpt.addEventListener("click", () => {
+  if (firstPlayerOpt.getAttribute("class") != "enabled") {
+    firstPlayerOpt.setAttribute("class", "enabled");
+    firstComputerOpt.setAttribute("class", "");
+    firstRandomOpt.setAttribute("class", "");
+    whoStartsvsPC = "P";
+  }
+});
+
+firstComputerOpt.addEventListener("click", () => {
+  if (firstComputerOpt.getAttribute("class") != "enabled") {
+    firstComputerOpt.setAttribute("class", "enabled");
+    firstPlayerOpt.setAttribute("class", "");
+    firstRandomOpt.setAttribute("class", "");
+    whoStartsvsPC = "C";
+  }
+});
+
+firstRandomOpt.addEventListener("click", () => {
+  if (firstRandomOpt.getAttribute("class") != "enabled") {
+    firstRandomOpt.setAttribute("class", "enabled");
+    firstPlayerOpt.setAttribute("class", "");
+    firstComputerOpt.setAttribute("class", "");
+    whoStartsvsPC = "R";
+  }
+});
+
 let difficulty = "E"; // "E", "M", "H"
+
+const lvlEasyOpt = document.querySelector("#easy");
+const lvlMediumOpt = document.querySelector("#medium");
+const lvlHardOpt = document.querySelector("#hard");
+
+lvlEasyOpt.addEventListener("click", () => {
+  if (lvlEasyOpt.getAttribute("class") != "enabled") {
+    lvlEasyOpt.setAttribute("class", "enabled");
+    lvlMediumOpt.setAttribute("class", "");
+    lvlHardOpt.setAttribute("class", "");
+    difficulty = "E";
+  }
+});
+
+lvlMediumOpt.addEventListener("click", () => {
+  if (lvlMediumOpt.getAttribute("class") != "enabled") {
+    lvlMediumOpt.setAttribute("class", "enabled");
+    lvlEasyOpt.setAttribute("class", "");
+    lvlHardOpt.setAttribute("class", "");
+    difficulty = "M";
+  }
+});
+
+lvlHardOpt.addEventListener("click", () => {
+  if (lvlHardOpt.getAttribute("class") != "enabled") {
+    lvlHardOpt.setAttribute("class", "enabled");
+    lvlEasyOpt.setAttribute("class", "");
+    lvlMediumOpt.setAttribute("class", "");
+    difficulty = "H";
+  }
+});
+
+function isPlayerTurn() {
+  if (againstComputer) {
+    if (whosTurn == playerSign) {
+      return true;
+    }
+    return false;
+  }
+  return true;
+}
+
+let emptySpots;
+let pickSpotNum;
+function moveEasy() {
+  emptySpots = 9 - turns;
+  pickSpotNum = Math.floor(Math.random() * emptySpots);
+
+  for (let i = 0; i < 9; i++) {
+    if (!isTaken(boxes[i])) {
+      if (pickSpotNum == 0) {
+        placeMove(boxes[i]);
+        break;
+      } else {
+        pickSpotNum--;
+      }
+    }
+  }
+}
 
 newRound();
