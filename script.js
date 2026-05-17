@@ -7,6 +7,7 @@ function newRound() {
   ];
   isActive = true;
   newGameBtn.disabled = true;
+  endGameBtn.disabled = false;
   turns = 0;
   whoStarts();
   for (let i = 0; i < boxes.length; i++) {
@@ -64,6 +65,8 @@ function placeMove(square) {
     settingsMenu.setAttribute("class", "settings");
     isActive = false;
     newGameBtn.disabled = false;
+    endGameBtn.disabled = true;
+
     winUpdate();
   } else {
     if (isActive) {
@@ -195,6 +198,7 @@ function isOver() {
     whosTurnText.innerHTML = "Draw!";
     draws++;
     drawsStats.textContent = draws;
+    endGameBtn.disabled = true;
   } else {
     return false;
   }
@@ -272,7 +276,15 @@ const newGameBtn = document.querySelector("#newGameBtn");
 newGameBtn.addEventListener("click", () => {
   newRound();
 });
+const endGameBtn = document.querySelector("#endGameBtn");
+endGameBtn.addEventListener("click", () => {
+  settingsMenu.setAttribute("class", "settings");
+  isActive = false;
+  newGameBtn.disabled = false;
+  endGameBtn.disabled = true;
 
+  whosTurnText.innerHTML = "Game Ended!";
+});
 // Stats
 let crossesWins = 0;
 let circlesWins = 0;
@@ -287,22 +299,22 @@ const typeComputerBtn = document.querySelector("#computer");
 const settings2Players = document.querySelector("#settings2Players");
 const settingsComputer = document.querySelector("#settingsComputer");
 
-// Wybieramy tryb gry dwoch graczy
+// Wybieramy tryb gry
+let againstComputer = false;
 typePlayersBtn.addEventListener("click", () => {
   if (typePlayersBtn.getAttribute("class") != "enabled") {
     typePlayersBtn.setAttribute("class", "enabled");
     typeComputerBtn.setAttribute("class", "");
-
+    againstComputer = false;
     settings2Players.style.display = "block";
     settingsComputer.style.display = "none";
   }
 });
-// Wybieramy tryb gry z komputerem
 typeComputerBtn.addEventListener("click", () => {
   if (typeComputerBtn.getAttribute("class") != "enabled") {
     typeComputerBtn.setAttribute("class", "enabled");
     typePlayersBtn.setAttribute("class", "");
-
+    againstComputer = true;
     settings2Players.style.display = "none";
     settingsComputer.style.display = "block";
   }
@@ -339,3 +351,10 @@ firstMoveRandomOpt.addEventListener("click", () => {
     firstMove = "R";
   }
 });
+
+// Dla gry vs pc
+let playerSign = "X";
+let whoStartsvsPC = "R"; // "P", "C", "R"
+let difficulty = "E"; // "E", "M", "H"
+
+newRound();
