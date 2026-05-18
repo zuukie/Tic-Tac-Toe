@@ -129,10 +129,13 @@ function turnChange() {
 
 function convertMaptoSquare(pos1, pos2) {
   if (pos1 == 0) {
+    console.log(boxes[pos2]);
     return boxes[pos2];
   } else if (pos1 == 1) {
+    console.log(boxes[3 + pos2]);
     return boxes[3 + pos2];
   } else {
+    console.log(boxes[6 + pos2]);
     return boxes[6 + pos2];
   }
 }
@@ -312,9 +315,9 @@ const rt = document.querySelector("#RT02");
 const lc = document.querySelector("#LC10");
 const cc = document.querySelector("#CC11");
 const rc = document.querySelector("#RC12");
-const rb = document.querySelector("#RB22");
 const lb = document.querySelector("#LB20");
 const cb = document.querySelector("#CB21");
+const rb = document.querySelector("#RB22");
 lt.addEventListener("click", () => {
   if (!isTaken(lt) && isPlayerTurn()) {
     placeMove(lt);

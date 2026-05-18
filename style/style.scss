@@ -66,7 +66,7 @@ h6 {
 }
 
 body {
-  background: linear-gradient(135deg, #1b1b1b 0%, #0e0e0e 100%);
+  background: #0e0e0e;
   font-family: "Plus Jakarta Sans", sans-serif;
   color: rgb(241, 241, 241);
 }
@@ -96,10 +96,11 @@ body::after {
 }
 
 main h1 {
-  margin: 5vh 0 1vh 0;
+  margin: 35px 0 5px 0;
   text-align: center;
 }
 main {
+  max-width: 1100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -126,7 +127,7 @@ hr {
 }
 .game {
   position: absolute;
-  top: 15vh;
+  top: 120px;
   margin: 10px 0;
   height: 300px;
   width: 300px;
@@ -165,7 +166,7 @@ hr {
 }
 
 .buttons {
-  margin-top: 40vh;
+  margin-top: 350px;
   margin-bottom: 30px;
 }
 button {
@@ -203,6 +204,9 @@ button:disabled {
   border-radius: 20px;
 }
 
+.settings {
+  margin-bottom: 100px;
+}
 .stats h4,
 .settings h4 {
   text-align: center;
@@ -294,17 +298,150 @@ button:disabled {
 
 @media (min-width: 992px) {
   main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
     height: 100vh;
-    flex-direction: row;
-    justify-content: center;
   }
   .mainColumn {
-    margin-right: 80px;
+    position: absolute;
+    left: 22%;
   }
-  .extras {
-    margin-left: 80px;
+  main h1 {
+    font-size: 24px;
+    margin-top: 25px;
+  }
+  main h3 {
+    font-size: 14px;
   }
   .game {
-    top: 35vh;
+    top: 80px;
+    width: 200px;
+    height: 200px;
+    gap: 4px;
+  }
+  .box {
+    border-radius: 15px;
+  }
+  .extras {
+    position: absolute;
+    top: 30px;
+    right: 22%;
+  }
+  .stats,
+  .settings {
+    width: 250px;
+    margin-bottom: 15px;
+  }
+  .extras h4 {
+    font-size: 14px;
+  }
+  .extras p {
+    font-size: 14px;
+  }
+
+  .buttons {
+    margin-top: 210px;
+  }
+  button {
+    font-size: 12px;
+  }
+  @media (min-height: 420px) and (max-height: 599px) {
+    .game {
+      top: 90px;
+      width: 230px;
+      height: 230px;
+      gap: 5px;
+    }
+    .box {
+      border-radius: 20px;
+    }
+    .extras {
+      top: 30px;
+    }
+    .buttons {
+      margin-top: 260px;
+    }
+    button {
+      font-size: 14px;
+    }
+  }
+  @media (min-height: 600px) and (max-height: 749px) {
+    .mainColumn {
+      top: 50px;
+      left: 20%;
+    }
+    .extras {
+      top: 50px;
+      right: 20%;
+    }
+    main h1 {
+      font-size: 26px;
+      margin-top: 35px;
+    }
+    main h3 {
+      font-size: 16px;
+    }
+    .game {
+      top: 100px;
+      width: 250px;
+      height: 250px;
+      gap: 5px;
+    }
+    .stats,
+    .settings {
+      width: 300px;
+      margin-bottom: 15px;
+    }
+    .buttons {
+      margin-top: 280px;
+    }
+    button {
+      font-size: 16px;
+    }
+  }
+  @media (min-height: 750px) {
+    .mainColumn,
+    .extras {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .mainColumn {
+      left: 19%;
+    }
+    .extras {
+      right: 19%;
+    }
+    .extras h4 {
+      font-size: 16px;
+    }
+    .extras p {
+      font-size: 14px;
+    }
+    main h1 {
+      margin-top: 0;
+      font-size: 36px;
+    }
+    main h3 {
+      font-size: 18px;
+    }
+    .game {
+      top: 90px;
+      height: 300px;
+      width: 300px;
+    }
+    .stats,
+    .settings {
+      width: 300px;
+    }
+
+    .buttons {
+      margin-top: 350px;
+    }
+    button {
+      font-size: 16px;
+    }
   }
 }
