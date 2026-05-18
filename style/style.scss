@@ -17,8 +17,11 @@
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  min-height: -webkit-fill-available;
 }
-
+html {
+  height: -webkit-fill-available;
+}
 img,
 picture,
 video,

@@ -20,11 +20,9 @@ function newRound() {
   if (againstComputer) {
     if (whosTurn != playerSign) {
       if (difficulty == "E") {
-        moveEasy();
+        setTimeout(moveEasy, 200);
       } else if (difficulty == "M") {
-        moveMedium();
-      } else if (difficulty == "H") {
-        moveHard();
+        setTimeout(moveMedium, 200);
       }
     }
   }
@@ -33,38 +31,44 @@ function newRound() {
 function whoStarts() {
   if (!againstComputer) {
     if (firstMove == "R") {
-      whosTurn = Math.floor(Math.random() * 2);
-      if (whosTurn == 0) {
+      if (whoStarted == "X") {
         whosTurn = "O";
         whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+        whoStarted = "O";
       } else {
         whosTurn = "X";
         whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+        whoStarted = "X";
       }
     } else if (firstMove == "X") {
       whosTurn = "X";
       whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+      whoStarted = "X";
     } else {
       whosTurn = "O";
       whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+      whoStarted = "O";
     }
   } else {
     if (whoStartsvsPC == "R") {
-      whosTurn = Math.floor(Math.random() * 2);
-      if (whosTurn == 0) {
+      if (whoStarted == "X") {
         whosTurn = "O";
         whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+        whoStarted = "O";
       } else {
         whosTurn = "X";
         whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+        whoStarted = "X";
       }
     } else if (whoStartsvsPC == "P") {
       if (playerSign == "X") {
         whosTurn = "X";
         whosTurnText.innerHTML = '<i class="fa-solid fa-x"> </i> Turn';
+        whoStarted = "X";
       } else {
         whosTurn = "O";
         whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
+        whoStarted = "O";
       }
     } else if (whoStartsvsPC == "C") {
       if (playerSign == "O") {
@@ -104,15 +108,32 @@ function turnChange() {
         whosTurn = "O";
         whosTurnText.innerHTML = '<i class="fa-regular fa-circle"> </i> Turn';
       }
-
+      possibleWins = [
+        [map[0][0], map[0][1], map[0][2]],
+        [map[1][0], map[1][1], map[1][2]],
+        [map[2][0], map[2][1], map[2][2]],
+        [map[0][0], map[1][0], map[2][0]],
+        [map[0][1], map[1][1], map[2][1]],
+        [map[0][2], map[1][2], map[2][2]],
+        [map[0][0], map[1][1], map[2][2]],
+        [map[2][0], map[1][1], map[0][2]],
+      ];
       if (difficulty == "E") {
         setTimeout(moveEasy, 500);
       } else if (difficulty == "M") {
-        moveMedium();
-      } else if (difficulty == "H") {
-        moveHard();
+        setTimeout(moveMedium, 500);
       }
     }
+  }
+}
+
+function convertMaptoSquare(pos1, pos2) {
+  if (pos1 == 0) {
+    return boxes[pos2];
+  } else if (pos1 == 1) {
+    return boxes[3 + pos2];
+  } else {
+    return boxes[6 + pos2];
   }
 }
 
@@ -275,7 +296,14 @@ function isOver() {
 
 let isActive;
 let turns;
+
 let whosTurn;
+let whoStarted;
+if (Math.floor(Math.random() * 2) == 0) {
+  whoStarted = "O";
+} else {
+  whoStarted = "X";
+}
 const whosTurnText = document.querySelector("#whosTurn");
 // Game Boxes
 const lt = document.querySelector("#LT00");
@@ -333,13 +361,56 @@ rb.addEventListener("click", () => {
   }
 });
 
-const boxes = [lt, ct, rt, lc, cc, rc, rb, lb, cb];
+const boxes = [lt, ct, rt, lc, cc, rc, lb, cb, rb];
 let map = [
   ["", "", ""],
   ["", "", ""],
   ["", "", ""],
 ];
 const line = document.querySelector("#line");
+let possibleWins = [];
+const possibleWinsTemplate = [
+  [
+    [0, 0],
+    [0, 1],
+    [0, 2],
+  ],
+  [
+    [1, 0],
+    [1, 1],
+    [1, 2],
+  ],
+  [
+    [2, 0],
+    [2, 1],
+    [2, 2],
+  ],
+  [
+    [0, 0],
+    [1, 0],
+    [2, 0],
+  ],
+  [
+    [0, 1],
+    [1, 1],
+    [2, 1],
+  ],
+  [
+    [0, 2],
+    [1, 2],
+    [2, 2],
+  ],
+  [
+    [0, 0],
+    [1, 1],
+    [2, 2],
+  ],
+  [
+    [2, 0],
+    [1, 1],
+    [0, 2],
+  ],
+];
 
 const newGameBtn = document.querySelector("#newGameBtn");
 newGameBtn.addEventListener("click", () => {
@@ -393,7 +464,7 @@ typeComputerBtn.addEventListener("click", () => {
 let firstMove = "R"; // "R" to default + "O" i "X"
 const firstMoveCrossOpt = document.querySelector("#firstCross");
 const firstMoveCircleOpt = document.querySelector("#firstCircle");
-const firstMoveRandomOpt = document.querySelector("#firstRandom");
+const firstMoveRandomOpt = document.querySelector("#rotation");
 
 // Opcje kto zaczyna
 firstMoveCrossOpt.addEventListener("click", () => {
@@ -444,7 +515,7 @@ playerSignOptCircle.addEventListener("click", () => {
 let whoStartsvsPC = "R"; // "P", "C", "R"
 const firstPlayerOpt = document.querySelector("#firstPlayer");
 const firstComputerOpt = document.querySelector("#firstComputer");
-const firstRandomOpt = document.querySelector("#firstRandomC");
+const firstRandomOpt = document.querySelector("#rotationPc");
 
 firstPlayerOpt.addEventListener("click", () => {
   if (firstPlayerOpt.getAttribute("class") != "enabled") {
@@ -477,13 +548,11 @@ let difficulty = "E"; // "E", "M", "H"
 
 const lvlEasyOpt = document.querySelector("#easy");
 const lvlMediumOpt = document.querySelector("#medium");
-const lvlHardOpt = document.querySelector("#hard");
 
 lvlEasyOpt.addEventListener("click", () => {
   if (lvlEasyOpt.getAttribute("class") != "enabled") {
     lvlEasyOpt.setAttribute("class", "enabled");
     lvlMediumOpt.setAttribute("class", "");
-    lvlHardOpt.setAttribute("class", "");
     difficulty = "E";
   }
 });
@@ -492,17 +561,7 @@ lvlMediumOpt.addEventListener("click", () => {
   if (lvlMediumOpt.getAttribute("class") != "enabled") {
     lvlMediumOpt.setAttribute("class", "enabled");
     lvlEasyOpt.setAttribute("class", "");
-    lvlHardOpt.setAttribute("class", "");
     difficulty = "M";
-  }
-});
-
-lvlHardOpt.addEventListener("click", () => {
-  if (lvlHardOpt.getAttribute("class") != "enabled") {
-    lvlHardOpt.setAttribute("class", "enabled");
-    lvlEasyOpt.setAttribute("class", "");
-    lvlMediumOpt.setAttribute("class", "");
-    difficulty = "H";
   }
 });
 
@@ -531,6 +590,62 @@ function moveEasy() {
         pickSpotNum--;
       }
     }
+  }
+}
+
+let oneToWin = undefined;
+let oneToLose = undefined;
+function moveMedium() {
+  if (turns < 3) {
+    moveEasy();
+  } else {
+    for (let i = 0; i < 8; i++) {
+      if (
+        possibleWins[i][0] == possibleWins[i][1] &&
+        possibleWins[i][1] != "" &&
+        possibleWins[i][2] == ""
+      ) {
+        if (possibleWins[i][1] == playerSign) {
+          oneToLose = possibleWinsTemplate[i][2];
+        } else {
+          oneToWin = possibleWinsTemplate[i][2];
+          break;
+        }
+      } else if (
+        possibleWins[i][1] == possibleWins[i][2] &&
+        possibleWins[i][2] != "" &&
+        possibleWins[i][0] == ""
+      ) {
+        if (possibleWins[i][2] == playerSign) {
+          oneToLose = possibleWinsTemplate[i][0];
+        } else {
+          oneToWin = possibleWinsTemplate[i][0];
+          break;
+        }
+      } else if (
+        possibleWins[i][0] == possibleWins[i][2] &&
+        possibleWins[i][2] != "" &&
+        possibleWins[i][1] == ""
+      ) {
+        if (possibleWins[i][2] == playerSign) {
+          oneToLose = possibleWinsTemplate[i][1];
+        } else {
+          oneToWin = possibleWinsTemplate[i][1];
+          break;
+        }
+      }
+    }
+    if (oneToWin == undefined) {
+      if (oneToLose == undefined) {
+        moveEasy();
+      } else {
+        placeMove(convertMaptoSquare(oneToLose[0], oneToLose[1]));
+      }
+    } else {
+      placeMove(convertMaptoSquare(oneToWin[0], oneToWin[1]));
+    }
+    oneToLose = undefined;
+    oneToWin = undefined;
   }
 }
 
